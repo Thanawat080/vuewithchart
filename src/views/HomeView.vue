@@ -5,8 +5,8 @@
         <div style="white-space: pre-wrap; text-align: left; border: 1px solid; word-break: break-all; width: 680px;">
           <div class="cloumns">
             <div class="cloumn">
-              {{ text }}
-              <button class="button" @click="showFullText = !showFullText"> Read {{ readMoreText }}...</button>
+              {{ displayedText }}
+              <a @click="showFullText = !showFullText" v-if=showreadmore> Read {{ readMoreText }}...</a>
             </div>
           </div>
           <div class="cloumns">
@@ -20,16 +20,33 @@
         <div class="columns" >
           <label for="" style="padding-bottom: 15px;">Select model for prediction</label>
         </div>
-        <div class="columns">
-          <div class="select" style="margin-left: 25px;">
-          <select>
-            <option option>Classification</option>
-            <option>Regression</option>
-          </select>
-          <br>
-          <br>
-          <div class="button is-success" @click="tograph">submit</div>
+        <div class="columns check1">
+          <label class="checkbox">
+            <input type="checkbox">
+            regression 1
+          </label>
         </div>
+        <div class="columns check1">
+          <label class="checkbox">
+            <input type="checkbox">
+            regression 2
+          </label>
+        </div>
+        <div class="columns check1">
+          <label class="checkbox">
+            <input type="checkbox">
+            classification 1
+          </label>
+        </div>
+        <div class="columns check1" >
+          <label class="checkbox">
+            <input type="checkbox">
+            classification 2
+          </label>
+        </div>
+        <br>
+        <div class="columns">
+          <div class="button is-success" @click="tograph">submit</div>
         </div>
       </div>
     </div>
@@ -83,7 +100,8 @@ export default {
       createImage: '',
       showFullText: false,
       text: '',
-      modalstatus: 'inline'
+      modalstatus: 'inline',
+      showreadmore: false
     }
   },
   methods: {
@@ -128,4 +146,15 @@ export default {
   /* number of lines to show */
   line-clamp: 2;
   -webkit-box-orient: vertical;
-}</style>
+}
+.check1 {
+ border:1px solid #ccc;
+ padding:10px;
+ margin:0 0 10px;
+ display: block;
+}
+.check1:hover {
+ background:#eee;
+ cursor:pointer;
+}
+</style>
