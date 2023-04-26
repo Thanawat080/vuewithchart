@@ -1,12 +1,15 @@
 <template>
   <div class="container" id="app">
     <div class="columns">
+      <div class="button is-info" @click="modalstatus = 'inline'">post</div>
+    </div>
+    <div class="columns">
       <div class="column is-two-thirds">
-        <div style="white-space: pre-wrap; text-align: left; border: 1px solid; word-break: break-all; width: 680px;">
+        <div style="white-space: pre-wrap; text-align: left; border: 1px solid #e2e2e2; word-break: break-all; width: 680px;" v-if="displaytextarae">
           <div class="cloumns">
             <div class="cloumn">
-              {{ displayedText }}
-              <a @click="showFullText = !showFullText" v-if=showreadmore> Read {{ readMoreText }}...</a>
+              {{ text }}
+              <a @click="showFullText" v-if=showreadmore> Read {{ textreadmore }}...</a>
             </div>
           </div>
           <div class="cloumns">
@@ -139,10 +142,13 @@ export default {
       input: '',
       search: '',
       createImage: '',
-      showFullText: false,
       text: '',
-      modalstatus: 'inline',
-      showreadmore: false
+      modalstatus: 'none',
+      showreadmore: false,
+      displaytextarae: false,
+      textreadmore: '',
+      mocktext: '',
+      statusmoretext: false
     }
   },
   methods: {
@@ -162,8 +168,24 @@ export default {
       }
     },
     submitpost () {
+      this.mocktext = this.text
       this.modalstatus = 'none'
-      console.log(this.text)
+      this.displaytextarae = true
+      if (this.text.length >= 20) {
+        this.text = this.text.slice(0, 20)
+        this.showreadmore = true
+        this.textreadmore = 'more'
+      }
+    },
+    showFullText () {
+      this.statusmoretext = !this.statusmoretext
+      if (this.statusmoretext) {
+        this.text = this.mocktext
+      }
+      if (this.statusmoretext === false) {
+        this.textreadmore = 'less'
+        this.text = this.text.slice(0, 20)
+      }
     }
   },
   directives: {
@@ -171,18 +193,6 @@ export default {
       inserted (el) {
         el.focus()
       }
-    }
-  },
-  computed: {
-    displayedText () {
-      if (!this.showFullText) {
-        return this.text.slice(0, 10)
-      } else {
-        return this.text
-      }
-    },
-    readMoreText () {
-      return this.showFullText ? 'less' : 'more'
     }
   }
 }
