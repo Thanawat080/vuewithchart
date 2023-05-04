@@ -85,7 +85,7 @@
               </div>
             </div>
             <div class="columns" style="margin-top: 11px;">
-              <div class="column is-10">
+              <div class="column is-9">
               </div>
               <div class="column">
                 <div class="columns">
