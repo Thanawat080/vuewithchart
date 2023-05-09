@@ -135,16 +135,16 @@
             <div class="columns check1">
               <label class="checkbox">
                 <input type="checkbox">
-                regression 1
+                Regression
               </label>
             </div>
             <div class="columns check1">
               <label class="checkbox">
                 <input type="checkbox">
-                regression 2
+                Classificatio
               </label>
             </div>
-            <div class="columns check1">
+            <!-- <div class="columns check1">
               <label class="checkbox">
                 <input type="checkbox">
                 classification 1
@@ -155,7 +155,7 @@
                 <input type="checkbox">
                 classification 2
               </label>
-            </div>
+            </div> -->
             <br>
             <div class="columns">
               <div class="button is-success" @click="tograph">submit</div>
