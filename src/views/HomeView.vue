@@ -121,8 +121,7 @@
                 </div>
               </div>
               <div class="cloumns">
-                <CloudImage :path='imgname'/>
-                <!-- <img src="https://firebasestorage.googleapis.com/v0/b/prediction-of-social.appspot.com/o/folder%2Fmyfile.png?alt=media&token=c6cd1113-5eb8-458a-9d88-f19c08dcf558" alt="" style="width: 100%;"> -->
+                <img :src='url' alt="" style="width: 100%;">
               </div>
               </div>
                 </div>
@@ -173,12 +172,10 @@
 <script>
 import EmojiPicker from 'vue-emoji-picker'
 import { storage } from '../firebase'
-import { ref, uploadBytes } from 'firebase/storage'
-import CloudImage from './CloudImage.vue'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 export default {
   components: {
-    EmojiPicker,
-    CloudImage
+    EmojiPicker
   },
   data () {
     return {
@@ -193,7 +190,8 @@ export default {
       mocktext: '',
       statusmoretext: false,
       imgname: '',
-      distextarae: false
+      distextarae: false,
+      url: 'https://via.placeholder.com/140x100'
     }
   },
   methods: {
@@ -232,6 +230,12 @@ export default {
         this.showreadmore = true
         this.textreadmore = 'more'
       }
+      getDownloadURL(ref(storage, this.imgname)).then(
+        (res) => {
+          this.url = res
+          console.log(this.url)
+        }
+      )
     },
     showFullText () {
       this.statusmoretext = !this.statusmoretext
