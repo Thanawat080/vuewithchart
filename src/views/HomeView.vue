@@ -20,6 +20,23 @@
         </div>
         <div class="columns" style="height: 90%;">
           <div class="column is-7">
+            <div  style="background-color: whitesmoke; padding: 50px;">
+              <div class="columns">
+                <div class="column">
+                  <p style="text-align: left;">กรอกผู้ติดตามเพจ <label for="" style="color: red;">(ถ้าไม่ได้ใช้เพจในการโพส กรอก 0)</label></p>
+                  <input class="input" v-model="pagefollow"/>
+                  <br>
+                  <br>
+                  <p style="text-align: left;">กรอกยอดไลค์เพจ <label for="" style="color: red;">(ถ้าไม่ได้ใช้เพจในการโพส กรอก 0)</label></p>
+                  <input class="input" v-model="pagelike"/>
+                </div>
+                <div class="column">
+                  <p style="text-align: left;">กรอกวันที่ต้องการโพส</p>
+                  <input type="datetime-local"  class="input" v-model="dateforpost">
+                </div>
+              </div>
+            </div>
+            <br>
             <div style="background-color: whitesmoke; padding: 50px;">
               <div class="columns">
                 <div class="column is-2">
@@ -27,8 +44,8 @@
                 </div>
                 <div class="column">
                   <section style="max-width: 90vh;">
-                    <textarea v-if="!distextarae" class="textarea" placeholder="e.g. Hello world" v-model="text"></textarea>
-                    <textarea v-else class="textarea" style="border: 1px solid #e2e2e2;" placeholder="e.g. Hello world" :disabled="distextarae"></textarea>
+                    <textarea v-if="!distextarae" class="textarea"  v-model="text"></textarea>
+                    <textarea v-else class="textarea" style="border: 1px solid #e2e2e2;"  :disabled="distextarae"></textarea>
                     <br>
                     <div class="input" :disabled="distextarae" style="border: 1px solid #e2e2e2;">Add to your post
                       <div class="image-upload" style="margin-left: 250px;">
@@ -131,7 +148,7 @@
           <div class="column is-1" style="border-left: 1px solid #d8d8d8; height: 105%;"></div>
           <div class="column" style="padding-right: 100px;">
             <div class="columns">
-              <label for="" style="padding-bottom: 15px;">Select model for prediction</label>
+              <b for="" style="padding-bottom: 15px; font-size: 20px; color: #af39d3;">Select model for prediction</b>
             </div>
             <div class="columns check1">
               <label class="checkbox">
@@ -191,7 +208,10 @@ export default {
       statusmoretext: false,
       imgname: '',
       distextarae: false,
-      url: 'https://via.placeholder.com/140x100'
+      url: '',
+      pagefollow: 0,
+      pagelike: 0,
+      dateforpost: ''
     }
   },
   methods: {
@@ -230,12 +250,15 @@ export default {
         this.showreadmore = true
         this.textreadmore = 'more'
       }
-      getDownloadURL(ref(storage, this.imgname)).then(
-        (res) => {
-          this.url = res
-          console.log(this.url)
-        }
-      )
+      if (this.imgname !== '') {
+        getDownloadURL(ref(storage, this.imgname)).then(
+          (res) => {
+            this.url = res
+            console.log(this.url)
+          }
+        )
+      }
+      console.log(this.dateforpost + ':04+0000')
     },
     showFullText () {
       this.statusmoretext = !this.statusmoretext
