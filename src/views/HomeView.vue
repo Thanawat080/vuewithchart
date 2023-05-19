@@ -27,16 +27,17 @@
                 </div>
                 <div class="column">
                   <section style="max-width: 90vh;">
-                    <textarea class="textarea" placeholder="e.g. Hello world" v-model="text"></textarea>
+                    <textarea v-if="!distextarae" class="textarea" placeholder="e.g. Hello world" v-model="text"></textarea>
+                    <textarea v-else class="textarea" style="border: 1px solid #e2e2e2;" placeholder="e.g. Hello world" :disabled="distextarae"></textarea>
                     <br>
-                    <div class="input">Add to your post
+                    <div class="input" :disabled="distextarae" style="border: 1px solid #e2e2e2;">Add to your post
                       <div class="image-upload" style="margin-left: 250px;">
                         <label for="file-input">
                           <img
                             src="https://static.xx.fbcdn.net/rsrc.php/v3/yC/r/a6OjkIIE-R0.png?_nc_eui2=AeEROHNgEIeAgmIkEz0Cir2CfK5Z1qDG7FV8rlnWoMbsVRBub7G9sWD6iVVh0J5TdGt_1i-OnVJ_PSthRF33l8_A"
                             style=" height: 24px; cursor: pointer;" />
                         </label>
-                        <input id="file-input" type="file" style="display: none" v-on:change="onFileChange" />
+                        <input id="file-input" type="file" style="display: none" v-on:change="upload" :disabled="distextarae"/>
                       </div>
                       <img
                         src="https://static.xx.fbcdn.net/rsrc.php/v3/yC/r/MqTJr_DM3Jg.png?_nc_eui2=AeFJI-Af9QMlz4__VIPfsowRt8fz8ZW9Ebm3x_Pxlb0RuY34momAG_iIJru00iVh9P572xJfSkS6MOm0sIxYoBQF"
@@ -120,7 +121,8 @@
                 </div>
               </div>
               <div class="cloumns">
-                <img src="../assets/logo.png" alt="" style="width: 100%;">
+                <CloudImage :path='imgname'/>
+                <!-- <img src="https://firebasestorage.googleapis.com/v0/b/prediction-of-social.appspot.com/o/folder%2Fmyfile.png?alt=media&token=c6cd1113-5eb8-458a-9d88-f19c08dcf558" alt="" style="width: 100%;"> -->
               </div>
               </div>
                 </div>
@@ -170,9 +172,13 @@
 
 <script>
 import EmojiPicker from 'vue-emoji-picker'
+import { storage } from '../firebase'
+import { ref, uploadBytes } from 'firebase/storage'
+import CloudImage from './CloudImage.vue'
 export default {
   components: {
-    EmojiPicker
+    EmojiPicker,
+    CloudImage
   },
   data () {
     return {
@@ -185,13 +191,16 @@ export default {
       displaytextarae: false,
       textreadmore: '',
       mocktext: '',
-      statusmoretext: false
+      statusmoretext: false,
+      imgname: '',
+      distextarae: false
     }
   },
   methods: {
     clear () {
       this.text = ''
       this.displaytextarae = false
+      this.distextarae = false
     },
     append (emoji) {
       this.text += emoji
@@ -199,16 +208,22 @@ export default {
     tograph () {
       this.$router.push({ name: 'graph' })
     },
-    onFileChange (e) {
+    upload (e) {
       var files = e.target.files || e.dataTransfer.files
-      console.log(files)
       if (!files.length) {
         console.log('no file')
       } else {
-        this.createImage(files[0])
+        this.createImage = files[0]
+        const storageRef = ref(storage, 'folder/' + this.createImage.name)
+        this.imgname = 'folder/' + files[0].name
+        console.log(this.imgname)
+        uploadBytes(storageRef, this.createImage).then((snapshot) => {
+          console.log('uploaded')
+        })
       }
     },
     submitpost () {
+      this.distextarae = true
       this.mocktext = this.text
       this.modalstatus = 'none'
       this.displaytextarae = true
