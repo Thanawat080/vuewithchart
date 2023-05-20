@@ -4,4 +4,3 @@ COPY package.json ./
 RUN npm install --legacy-peer-dep
 COPY . .
 RUN npm run build
-EXPOSE 8081
