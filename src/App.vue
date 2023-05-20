@@ -29,6 +29,6 @@ nav a.router-link-exact-active {
 html, body {
   margin:0;
   padding:0;
-  height:200%;
+  height:350%;
 }
 </style>
