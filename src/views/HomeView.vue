@@ -1,7 +1,7 @@
 <template>
   <div class="container " style="background-color: white; max-width: 97%; height: 100%; border-radius: 10px;">
     <div class="columns" style="height: 100%;">
-      <div class="column" style="height: 100%; background-color: #2d48bd; max-width: 5%; border-top-left-radius: 10px;">
+      <div class="column checkdis" style="height: 100%; background-color: #2d48bd; max-width: 5%; border-top-left-radius: 10px;">
       </div>
       <div class="column">
         <div class="columns">
@@ -77,22 +77,22 @@
                         <div class="column">
                           <img
                             src="https://static.xx.fbcdn.net/rsrc.php/v3/yC/r/MqTJr_DM3Jg.png?_nc_eui2=AeFJI-Af9QMlz4__VIPfsowRt8fz8ZW9Ebm3x_Pxlb0RuY34momAG_iIJru00iVh9P572xJfSkS6MOm0sIxYoBQF"
-                            style="margin-top: 6px; height: 24px; max-width: 100%; cursor: pointer;" />
+                            style="margin-top: 6px; height: 24px; max-width: 150%; cursor: pointer;" />
                         </div>
                         <div class="column">
                           <img
                             src="https://static.xx.fbcdn.net/rsrc.php/v3/yk/r/yMDS19UDsWe.png?_nc_eui2=AeEi2s3rGXvlZU57UTWU6R9dv2_PAiqLvPK_b88CKou88twurSMqHa2w99_rqhQsXSMFCRrWJAUhQtK_N-KKcBhB"
-                            style=" margin-top: 6px;  height: 24px; max-width: 100%; cursor: pointer;" />
+                            style=" margin-top: 6px;  height: 24px; max-width: 150%; cursor: pointer;" />
                         </div>
                         <div class="column">
                           <img
                             src="https://static.xx.fbcdn.net/rsrc.php/v3/yy/r/uywzfiZad5N.png?_nc_eui2=AeGl2qErAVlTazE4NIAAtE-SzQ4v13Ks4CbNDi_XcqzgJkhrtx7REu1TQw2_F8CIws13tK5CbD6e4h1tNG2gtGYL"
-                            style="margin-top: 6px;  height: 24px; max-width: 100%; cursor: pointer;" />
+                            style="margin-top: 6px;  height: 24px; max-width: 150%; cursor: pointer;" />
                         </div>
                         <div class="column">
                           <img
                             src="https://static.xx.fbcdn.net/rsrc.php/v3/yY/r/CenxFlWjtJO.png?_nc_eui2=AeHNEdymbgD-8uBWR6mmjZ8Kz4XXObU63WDPhdc5tTrdYOq3gKzMywwqCKKeW8fTJ_YGuqtay6hQSitG7v1S5BGz"
-                            style="margin-top: 6px; height: 24px; max-width: 100%; cursor: pointer;" />
+                            style="margin-top: 6px; height: 24px; max-width: 150%; cursor: pointer;" />
                         </div>
                         <div class="column">
                           <div class="wrapper">
@@ -270,6 +270,8 @@ export default {
         alert('กรอกจำนวนผู้กดถูกใจเพจ')
       } else if (this.text === '') {
         alert('กรอกข้อมูลที่ต้องการโพส')
+      } else if (this.dateforpost === '') {
+        alert('กรอกวันที่ที่ต้องการโพส')
       } else {
         this.$router.push({ name: 'graph', params: { message_tags: this.tag.split(','), pl: this.pagelike, pg: this.pagefollow, msg: this.textforsend, created_time: this.dateforpost + ':04+0000', type: this.type } })
       }
@@ -439,6 +441,12 @@ export default {
   padding: 0.2rem;
   cursor: pointer;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 800px) {
+  .checkdis {
+    display: none;
+  }
 }
 
 .emoji-picker .emojis span:hover {
