@@ -41,4 +41,4 @@ COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 80
 
 # Start Nginx when the container launches
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;", "--ssl-keyfile", "./private_key.key", "--ssl-certfile", "./certificate.crt"]
