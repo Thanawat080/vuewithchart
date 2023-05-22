@@ -2,11 +2,12 @@
   <div class="container" style="background-color: white; max-width: 97%; height: 100%; border-radius: 10px;">
     <div style="margin-top: 22px;" v-if="showregression">
       <div class="columns">
-          <div class="column is-8" >
+        <div class="column is-1"></div>
+          <div class="column">
             <center>
               <Bar  :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId"
                 :dataset-id-key="datasetIdKey" :plugins="plugins" :css-classes="cssClasses" :styles="styles" :width="width"
-                :height="height" style="max-width: 90%;" />
+                :height="height" style="max-width: 100%;" />
             </center>
           </div>
           <div class="column">
@@ -42,7 +43,7 @@
         <br>
       <div class="columns">
         <div class="column">
-          <p style="color: #0C3F66;"><b>Average number of likes per day (accuracy  50%)</b></p>
+          <p style="color: #0C3F66;"><b>Average number of likes per day (accuracy  38%)</b></p>
           <br>
           <div style="border: 1px solid; border-radius: 30px; width: 300px; height: 65px; background-color: white; padding-top: 20px; text-align: center; background-color: #b5f38b;"><b>ยอดไลค์จะอยู่ในช่วง {{ resultclassification1 }}</b></div>
           <div style="border: 1px solid; border-radius: 30px; width: 231px; height: 35px; background-color: white; padding-top: 5px; margin-top: 5px;" :style="{backgroundColor:cng1}"><b>กลุ่ม 1 ยอดไลค์ 0 - 10</b></div>
@@ -58,7 +59,7 @@
           <div style="border: 1px solid; border-radius: 30px; width: 231px; height: 35px; background-color: white; padding-top: 5px;margin-top: 5px;" :style="{backgroundColor:cng11}"><b>กลุ่ม 11 ยอดไลค์มากกว่า 5000</b></div>
         </div>
         <div class="column">
-          <p style="color: #0C3F66;"><b>Adjacent Group (accuracy  70%)</b></p>
+          <p style="color: #0C3F66;"><b>Adjacent Group (accuracy  61%)</b></p>
           <br>
           <div style="border: 1px solid; border-radius: 30px; width: 300px; height: 65px; background-color: white; padding-top: 20px; text-align: center; background-color: #b5f38b;"><b>ยอดไลค์จะอยู่ในช่วง  {{ resultclassification1 }}</b></div>
           <div style="border: 1px solid; border-radius: 30px; width: 300px; height: 65px; background-color: white; padding-top: 20px; margin-top: 5px; text-align: center; background-color: #b5f38b;"><b>ยอดไลค์จะอยู่ในช่วง  {{ resultclassification2 }}</b></div>
@@ -89,7 +90,7 @@
         <br>
       <div class="columns">
         <div class="column">
-          <p style="color: #0C3F66;"><b>Average number of likes per day (accuracy  50%)</b></p>
+          <p style="color: #0C3F66;"><b>Average number of likes per day (accuracy  34%)</b></p>
           <br>
           <div style="border: 1px solid; border-radius: 30px; width: 300px; height: 65px; background-color: white; padding-top: 20px; text-align: center; background-color: #b5f38b;"><b>ยอดไลค์จะอยู่ในช่วง {{ resultranking1 }}</b></div>
           <div style="border: 1px solid; border-radius: 30px; width: 231px; height: 35px; background-color: white; padding-top: 5px; margin-top: 5px;" :style="{backgroundColor:rng1}"><b>กลุ่ม 1 ยอดไลค์ 0 - 10</b></div>
@@ -105,7 +106,7 @@
           <div style="border: 1px solid; border-radius: 30px; width: 231px; height: 35px; background-color: white; padding-top: 5px;margin-top: 5px;" :style="{backgroundColor:rng11}"><b>กลุ่ม 11 ยอดไลค์มากกว่า 5000</b></div>
         </div>
         <div class="column">
-          <p style="color: #0C3F66;"><b>Adjacent Group (accuracy  70%)</b></p>
+          <p style="color: #0C3F66;"><b>Adjacent Group (accuracy  63%)</b></p>
           <br>
           <div style="border: 1px solid; border-radius: 30px; width: 300px; height: 65px; background-color: white; padding-top: 20px; text-align: center; background-color: #b5f38b;"><b>ยอดไลค์จะอยู่ในช่วง  {{ resultranking1 }}</b></div>
           <div style="border: 1px solid; border-radius: 30px; width: 300px; height: 65px; background-color: white; padding-top: 20px; margin-top: 5px; text-align: center; background-color: #b5f38b;"><b>ยอดไลค์จะอยู่ในช่วง  {{ resultranking2 }}</b></div>
@@ -144,7 +145,6 @@ import {
   PointElement,
   BarElement
 } from 'chart.js'
-
 ChartJS.register(
   Title,
   Tooltip,
@@ -354,7 +354,7 @@ export default {
     }
     for (let i = 0; i < this.type.length; i++) {
       if (this.type[i] === 'regression') {
-        axios.post('http://139.180.213.160:8080/predict', {
+        axios.post('https://139.180.213.160:443/predict/', {
           created_time: this.created_time,
           message_tags: '[' + array + ']',
           msg: this.msg,
@@ -364,13 +364,17 @@ export default {
         }).then((res) => {
           var text = res.data.replaceAll("'", '"')
           text = text.replaceAll('inf', '"inf"')
-          this.resultregression = JSON.parse(text).score
+          if (JSON.parse(text).score === 'inf') {
+            this.resultregression = 'ค่าความนิยมมากกว่า 1 แสน'
+          } else {
+            this.resultregression = JSON.parse(text).score
+          }
           this.chartData.datasets[0].data = JSON.parse(text).dataList
         }).catch((err) => {
           console.log(err)
         })
       } else if (this.type[i] === 'classification') {
-        axios.post('http://139.180.213.160:8080/predict', {
+        axios.post('https://139.180.213.160:443/predict/', {
           created_time: this.created_time,
           message_tags: '[' + array + ']',
           msg: this.msg,
@@ -471,7 +475,7 @@ export default {
           console.log(err)
         })
       } else if (this.type[i] === 'ranking') {
-        axios.post('http://139.180.213.160:8080/predict', {
+        axios.post('https://139.180.213.160:443/predict/', {
           created_time: this.created_time,
           message_tags: '[' + array + ']',
           msg: this.msg,

@@ -23,21 +23,22 @@
             <div style="background-color: whitesmoke; padding: 50px;">
               <div class="columns">
                 <div class="column">
-                  <p style="text-align: left;">กรอกผู้ติดตามเพจ <label for="" style="color: red;">(ถ้าไม่ได้ใช้เพจในการโพส
-                      กรอก 0)</label></p>
+                  <p style="text-align: left;">กรอกผู้ติดตามเพจ</p>
+                  <p style="color: red; text-align: left;">(ถ้าไม่ได้ใช้เพจในการโพสกรอก 0)</p>
                   <input class="input" v-model="pagefollow" type="number"/>
                   <br>
                   <br>
-                  <p style="text-align: left;">กรอกยอดไลค์เพจ <label for="" style="color: red;">(ถ้าไม่ได้ใช้เพจในการโพส
-                      กรอก 0)</label></p>
+                  <p style="text-align: left;">กรอกยอดไลค์เพจ</p>
+                  <p style="color: red; text-align: left;">(ถ้าไม่ได้ใช้เพจในการโพสกรอก 0)</p>
                   <input class="input" v-model="pagelike"  type="number"/>
                 </div>
-                <div class="column">
+                <div class="column" style="margin-top: 24px;">
                   <p style="text-align: left;">กรอกวันที่ต้องการโพส</p>
                   <input type="datetime-local" class="input" v-model="dateforpost">
                   <br>
                   <br>
-                  <p style="text-align: left;">กรอกแท็กของโพส <label for="" style="color: red;">(ตัวอย่าง #GlicoIceTH, #GiantConeCrown)</label></p>
+                  <p style="text-align: left;">กรอกแท็กของโพส</p>
+                  <p style="color: red; text-align: left;">(ตัวอย่าง #GlicoIceTH, #GiantConeCrown)</p>
                   <input  class="input" v-model="tag">
                 </div>
               </div>
@@ -62,7 +63,7 @@
                 <div class="column" style="margin-left: 12px;">
                   <div class="input columns" :disabled="distextarae" style="border: 1px solid #e2e2e2;"><label for="">
                         Add to your post</label>
-                        <div class="column is-6"></div>
+                        <div class="column is-4"></div>
                         <div class="column">
                           <div class="image-upload">
                             <label for="file-input">
